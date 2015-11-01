@@ -1,0 +1,26 @@
+mysql:
+  image: mysql/mysql-server:5.5
+  ports:
+    - "3306:3306"
+  volumes:
+    - ./mysql:/var/lib/mysql
+  environment:
+    MYSQL_DATABASE: zeppelin 
+    MYSQL_ROOT_PASSWORD: talent
+  restart: always
+
+elk:
+  image: sectong/elk-jdbc-zeppelin
+  links:
+    - mysql:mysql
+  ports:
+    - "80:80"
+    - "8080:8080"
+    - "8081:8081"
+    - "514:5140/udp"
+  volumes:
+    - ./config:/etc/logstash
+    - ./data:/data
+    - ./zeppelin/notebook:/opt/zeppelin/notebook
+    - ./zeppelin/interpreter.json:/opt/zeppelin/conf/interpreter.json
+  restart: always
