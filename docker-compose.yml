@@ -4,6 +4,7 @@ mysql:
     - "3306:3306"
   volumes:
     - ./mysql:/var/lib/mysql
+    - ./zeppelin/mysql-remove-old-rows.sh:/etc/cron.daily/mysql-remove-old-rows.sh
   environment:
     MYSQL_DATABASE: zeppelin 
     MYSQL_ROOT_PASSWORD: talent
